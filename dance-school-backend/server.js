@@ -38,6 +38,10 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
+app.get('/', (req, res) => {
+  res.send('🎵 Drizzle Dance API is running successfully!');
+});
+
 const startServer = async () => {
   try {
     await connectDB();

@@ -15,7 +15,6 @@ const AuthPage = () => {
 
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [regData, setRegData] = useState({ name: '', email: '', password: '', phone: '', role: 'student', specialization: '' });
-
   const danceStyles = ['Bharatanatyam', 'Contemporary', 'Hip Hop', 'Salsa', 'Jazz', 'Kathak', 'Ballet', 'Bollywood'];
 
   const handleLogin = async (e) => {
@@ -106,6 +105,8 @@ const AuthPage = () => {
 
           {mode === 'login' && (
             <>
+              {/* NOTE: login mode only shows sign-in form; sign-up is shown in register mode */}
+
               <h2 className="text-2xl font-bold text-white mb-1">Welcome Back</h2>
               <p className="text-gray-400 text-sm mb-6">Sign in to your account</p>
               <form onSubmit={handleLogin} className="space-y-4">
@@ -156,6 +157,7 @@ const AuthPage = () => {
             <>
               <h2 className="text-2xl font-bold text-white mb-1">Join Drizzle Dance</h2>
               <p className="text-gray-400 text-sm mb-6">Create your account</p>
+
               <form onSubmit={handleRegister} className="space-y-4">
                 <div>
                   <label className="text-sm text-gray-400 mb-1 block">Full Name</label>
@@ -214,17 +216,45 @@ const AuthPage = () => {
                 </div>
                 <div>
                   <label className="text-sm text-gray-400 mb-1 block">I am a</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    <button type="button" onClick={() => setRegData({ ...regData, role: 'student', specialization: '' })}
+                  <div className="grid grid-cols-3 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setRegData({ ...regData, role: 'student', specialization: '' })}
                       className={`p-3 rounded-xl border text-sm font-medium transition-all ${
-                        regData.role === 'student' ? 'border-purple-500 bg-purple-500/20 text-purple-300' : 'border-white/10 bg-white/5 text-gray-400 hover:border-white/20'
-                      }`}>🎓 Student</button>
-                    <button type="button" onClick={() => setRegData({ ...regData, role: 'trainer' })}
+                        regData.role === 'student'
+                          ? 'border-purple-500 bg-purple-500/20 text-purple-300'
+                          : 'border-white/10 bg-white/5 text-gray-400 hover:border-white/20'
+                      }`}
+                    >
+                      🎓 Student
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setRegData({ ...regData, role: 'trainer' })}
                       className={`p-3 rounded-xl border text-sm font-medium transition-all ${
-                        regData.role === 'trainer' ? 'border-pink-500 bg-pink-500/20 text-pink-300' : 'border-white/10 bg-white/5 text-gray-400 hover:border-white/20'
-                      }`}>🎤 Trainer</button>
+                        regData.role === 'trainer'
+                          ? 'border-pink-500 bg-pink-500/20 text-pink-300'
+                          : 'border-white/10 bg-white/5 text-gray-400 hover:border-white/20'
+                      }`}
+                    >
+                      🎤 Trainer
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setRegData({ ...regData, role: 'admin', specialization: '' })}
+                      className={`p-3 rounded-xl border text-sm font-medium transition-all ${
+                        regData.role === 'admin'
+                          ? 'border-yellow-500 bg-yellow-500/20 text-yellow-300'
+                          : 'border-white/10 bg-white/5 text-gray-400 hover:border-white/20'
+                      }`}
+                    >
+                      🛡️ Admin
+                    </button>
                   </div>
                 </div>
+
                 {regData.role === 'trainer' && (
                   <div>
                     <label className="text-sm text-gray-400 mb-1 block">Dance Style You Teach</label>

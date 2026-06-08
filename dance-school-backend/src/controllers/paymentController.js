@@ -5,8 +5,6 @@ const path = require('path');
 const fs = require('fs');
 const { createNotification } = require('../utils/notificationService');
 
-const FeePermission = require('../models/FeePermission');
-
 exports.createPayment = async (req, res, next) => {
   try {
     let studentId;
@@ -21,33 +19,7 @@ exports.createPayment = async (req, res, next) => {
     }
 
     const courseId = req.body.course || (await Student.findById(studentId))?.enrolledCourse;
-    // Fee gating: student can pay only when trainer granted permission for current week
-    if (req.user.role === 'student') {
-      const { getWeekKey } = require('../utils/weekKey');
-      const Enrollment = require('../models/Enrollment');
-      const Student = require('../models/Student');
-
-      const student = await Student.findOne({ user: req.user._id });
-      if (!student) return res.status(404).json({ success: false, message: 'Student not found' });
-
-      const enrollment = await Enrollment.findOne({ student: student._id });
-      if (!enrollment) return res.status(400).json({ success: false, message: 'Not enrolled in a course' });
-
-      const weekKey = getWeekKey(new Date());
-      const perm = await FeePermission.findOne({ enrollment: enrollment._id, weekKey });
-
-      if (!perm || !perm.isAllowed) {
-        return res.status(403).json({ success: false, message: 'Fee permission not granted for this week' });
-      }
-      if (perm.dueAt && new Date() > perm.dueAt) {
-        return res.status(403).json({ success: false, message: 'Due date passed. Ask your trainer for new permission.' });
-      }
-    }
-
-
     const payment = await Payment.create({
-      // status is expected from frontend (pending/paid); student payment allowed by permission
-
       student: studentId,
       course: courseId,
       amount: req.body.amount,

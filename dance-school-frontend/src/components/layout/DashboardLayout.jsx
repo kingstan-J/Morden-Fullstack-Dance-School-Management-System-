@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { FiMenu, FiX, FiBell, FiLogOut, FiMusic, FiShield } from 'react-icons/fi';
+import { FiMenu, FiX, FiBell, FiLogOut, FiUser, FiChevronDown, FiMusic } from 'react-icons/fi';
 import useAuthStore from '../../store/authStore';
 import toast from 'react-hot-toast';
 import api from '../../utils/api';
@@ -56,21 +56,9 @@ const DashboardLayout = ({ children, navItems, role }) => {
   };
 
   useEffect(() => {
-    let mounted = true;
-    const run = async () => {
-      if (!mounted) return;
-      await fetchNotifications();
-    };
-    run();
-
-    const interval = setInterval(() => {
-      if (mounted) fetchNotifications();
-    }, 60000);
-
-    return () => {
-      mounted = false;
-      clearInterval(interval);
-    };
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -151,19 +139,9 @@ const DashboardLayout = ({ children, navItems, role }) => {
             <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-all lg:hidden">
               <FiMenu size={18} />
             </button>
+            <h1 className="text-white font-semibold capitalize">{role} Panel</h1>
           </div>
           <div className="flex items-center gap-3">
-            {role === 'admin' && user?.role === 'admin' && (
-              <Link
-                to="/admin"
-                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg shadow-purple-500/20 hover:from-purple-500 hover:to-pink-400 transition-all"
-                aria-label="Admin Panel"
-              >
-                <FiShield size={16} className="text-white" />
-              </Link>
-            )}
-            <h1 className="text-white font-semibold capitalize">{role} Panel</h1>
-
             <div ref={notificationRef} className="relative">
             <button onClick={() => setNotificationsOpen((prev) => !prev)} className="relative p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">
               <FiBell size={18} />

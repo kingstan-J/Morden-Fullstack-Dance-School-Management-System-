@@ -157,12 +157,13 @@ const DashboardLayout = ({ children, navItems, role }) => {
               <Link
                 to="/admin"
                 className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg shadow-purple-500/20 hover:from-purple-500 hover:to-pink-400 transition-all"
+                aria-label="Admin Panel"
               >
                 <FiShield size={16} className="text-white" />
-                Admin Panel
               </Link>
             )}
             <h1 className="text-white font-semibold capitalize">{role} Panel</h1>
+
             <div ref={notificationRef} className="relative">
             <button onClick={() => setNotificationsOpen((prev) => !prev)} className="relative p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-all">
               <FiBell size={18} />

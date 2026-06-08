@@ -28,7 +28,7 @@ const Navbar = () => {
     setTimeout(() => setOpen(false), 0);
   }, [location]);
 
-  const dashboardLink = user ? `/${user.role}` : '/auth';
+
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled ? 'glass border-b border-white/10' : ''}`}>
@@ -52,6 +52,8 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-3">
           {user ? (
             <>
+              <Link to="/auth" className="btn-primary text-sm">Login</Link>
+              <Link to="/auth" className="btn-secondary text-sm">Sign Up</Link>
               {user.role === 'admin' && (
                 <Link
                   to="/admin"
@@ -60,10 +62,12 @@ const Navbar = () => {
                   Admin Panel
                 </Link>
               )}
-              <Link to={dashboardLink} className="btn-primary text-sm">Dashboard</Link>
             </>
           ) : (
-            <Link to="/auth" className="btn-primary text-sm">Get Started</Link>
+            <>
+              <Link to="/auth" className="btn-primary text-sm">Login</Link>
+              <Link to="/auth" className="btn-secondary text-sm">Sign Up</Link>
+            </>
           )}
         </div>
 
@@ -80,9 +84,11 @@ const Navbar = () => {
               {l.label}
             </NavLink>
           ))}
-          <Link to={user ? dashboardLink : '/auth'} className="btn-primary text-sm text-center mt-2">
-            {user ? 'Dashboard' : 'Get Started'}
-          </Link>
+          <div className="flex gap-2 mt-2">
+            <Link to="/auth" className="btn-primary text-sm text-center flex-1">Login</Link>
+            <Link to="/auth" className="btn-secondary text-sm text-center flex-1">Sign Up</Link>
+          </div>
+
         </div>
       )}
     </nav>

@@ -1,9 +1,11 @@
-require('dotenv').config();
+const path = require('path');
+const dotenvPath = path.resolve(__dirname, '.env');
+require('dotenv').config({ path: dotenvPath, override: true });
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const path = require('path');
 const connectDB = require('./src/config/db');
 const { ensureAdminAccount } = require('./src/utils/initialData');
 
@@ -12,7 +14,23 @@ const errorHandler = require('./src/middleware/error');
 const app = express();
 
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+// CORS: frontend origin must match exactly for cookies/auth.
+// If CLIENT_URL isn't set correctly, browsers will block requests and axios will show "Network Error".
+const clientOrigin = process.env.CLIENT_URL;
+
+app.use(
+  cors({
+    origin: clientOrigin
+      ? clientOrigin
+      : [
+          'http://localhost:5173',
+          'http://127.0.0.1:5173',
+          'http://localhost:3000',
+          'http://127.0.0.1:3000',
+        ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(morgan('dev'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

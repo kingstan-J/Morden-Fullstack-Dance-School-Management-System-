@@ -58,10 +58,7 @@ const Navbar = () => {
               {user.role} Panel
             </Link>
           ) : (
-            <>
-              <Link to="/auth" className="btn-primary text-sm">Login</Link>
-              <Link to="/auth" className="btn-secondary text-sm">Sign Up</Link>
-            </>
+            <Link to="/auth" className="btn-primary text-sm">Login</Link>
           )}
         </div>
 
@@ -84,10 +81,7 @@ const Navbar = () => {
                 {user.role} Panel
               </Link>
             ) : (
-              <>
-                <Link to="/auth" className="btn-primary text-sm text-center flex-1">Login</Link>
-                <Link to="/auth" className="btn-secondary text-sm text-center flex-1">Sign Up</Link>
-              </>
+              <Link to="/auth" className="btn-primary text-sm text-center flex-1">Login</Link>
             )}
           </div>
 

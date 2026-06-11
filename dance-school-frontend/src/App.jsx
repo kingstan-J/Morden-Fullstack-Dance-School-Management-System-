@@ -1,8 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
+// Scroll Restoration
+import ScrollToTop from './components/common/ScrollToTop';
+
 // Auth
 import ProtectedRoute from './components/common/ProtectedRoute';
+
 
 // Public Pages
 import HomePage from './pages/public/HomePage';
@@ -51,6 +55,7 @@ import AdminCertificates from './pages/admin/AdminCertificates';
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Toaster
         position="top-right"
         toastOptions={{

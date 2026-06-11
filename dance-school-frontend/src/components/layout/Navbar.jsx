@@ -51,18 +51,12 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center gap-3">
           {user ? (
-            <>
-              <Link to="/auth" className="btn-primary text-sm">Login</Link>
-              <Link to="/auth" className="btn-secondary text-sm">Sign Up</Link>
-              {user.role === 'admin' && (
-                <Link
-                  to="/admin"
-                  className="px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg shadow-purple-500/20 hover:from-purple-500 hover:to-pink-400 transition-all"
-                >
-                  Admin Panel
-                </Link>
-              )}
-            </>
+            <Link
+              to={`/${user.role}`}
+              className="px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg shadow-purple-500/20 hover:from-purple-500 hover:to-pink-400 transition-all capitalize"
+            >
+              {user.role} Panel
+            </Link>
           ) : (
             <>
               <Link to="/auth" className="btn-primary text-sm">Login</Link>
@@ -85,8 +79,16 @@ const Navbar = () => {
             </NavLink>
           ))}
           <div className="flex gap-2 mt-2">
-            <Link to="/auth" className="btn-primary text-sm text-center flex-1">Login</Link>
-            <Link to="/auth" className="btn-secondary text-sm text-center flex-1">Sign Up</Link>
+            {user ? (
+              <Link to={`/${user.role}`} className="px-4 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-500 text-white text-center flex-1 capitalize">
+                {user.role} Panel
+              </Link>
+            ) : (
+              <>
+                <Link to="/auth" className="btn-primary text-sm text-center flex-1">Login</Link>
+                <Link to="/auth" className="btn-secondary text-sm text-center flex-1">Sign Up</Link>
+              </>
+            )}
           </div>
 
         </div>

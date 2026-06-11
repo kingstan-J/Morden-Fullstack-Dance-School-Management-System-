@@ -6,7 +6,26 @@ import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import api from '../../utils/api';
 
+// Image imports
+import heroImg from '../../assets/hero.png';
+import bharatanatyamImg from '../../assets/courses/bharatanatyam.png';
+import contemporaryImg from '../../assets/courses/contemporary.png';
+import hiphopImg from '../../assets/courses/hiphop.png';
+import salsaImg from '../../assets/courses/salsa.png';
+import balletImg from '../../assets/courses/ballet.png';
+
 const courseIcons = { Bharatanatyam: '💃', Contemporary: '🎭', 'Hip Hop': '🎤', Salsa: '🕺', Ballet: '🩰', Kathak: '💫' };
+
+const courseImages = {
+  Bharatanatyam: bharatanatyamImg,
+  Contemporary: contemporaryImg,
+  'Hip Hop': hiphopImg,
+  Salsa: salsaImg,
+  Ballet: balletImg,
+  Kathak: 'https://images.unsplash.com/photo-1547153760-18fc86324498?auto=format&fit=crop&w=600&q=80',
+};
+
+const defaultCourseImg = 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80';
 
 const HomePage = () => {
   const [courses, setCourses] = useState([]);
@@ -42,31 +61,40 @@ const HomePage = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+      <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-24 lg:pt-32 pb-16">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-600/20 rounded-full blur-3xl animate-pulse delay-1000" />
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-sm mb-6">
-              <FiMusic size={16} /> Welcome to Drizzle Dance Academy
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-              Where Every <span className="gradient-text">Step</span><br />Tells a Story
-            </h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Discover the joy of dance with world-class trainers. From classical to contemporary, find your rhythm and express your soul.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link to="/auth" className="btn-primary flex items-center gap-2 text-lg px-8 py-4">
-                Start Your Journey <FiArrowRight />
-              </Link>
-              <Link to="/courses" className="btn-secondary flex items-center gap-2 text-lg px-8 py-4">
-                <FiPlay /> Explore Courses
-              </Link>
-            </div>
-          </motion.div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Text content */}
+            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-sm mb-6">
+                <FiMusic size={16} /> Welcome to Drizzle Dance Academy
+              </div>
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                Where Every <span className="gradient-text">Step</span><br />Tells a Story
+              </h1>
+              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0">
+                Discover the joy of dance with world-class trainers. From classical to contemporary, find your rhythm and express your soul.
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+                <Link to="/auth" className="btn-primary flex items-center gap-2 text-lg px-8 py-4">
+                  Start Your Journey <FiArrowRight />
+                </Link>
+                <Link to="/courses" className="btn-secondary flex items-center gap-2 text-lg px-8 py-4">
+                  <FiPlay /> Explore Courses
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Right Column - Image content */}
+            <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="hidden lg:flex justify-center relative">
+              <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-pink-500/20 rounded-3xl blur-2xl transform rotate-3" />
+              <img src={heroImg} alt="Dancer in motion" className="w-[480px] h-[520px] object-cover rounded-3xl border border-purple-500/25 shadow-2xl relative z-10 hover:scale-[1.02] transition-transform duration-500" />
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -96,14 +124,27 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {courses.map((course, i) => (
             <motion.div key={course._id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
-              className="glass-card p-6 hover:border-purple-500/40 transition-all group cursor-pointer">
-              <div className="text-4xl mb-4">{courseIcons[course.danceStyle] || '🎵'}</div>
-              <span className="text-xs px-2 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 capitalize">{course.level}</span>
-              <h3 className="text-lg font-bold text-white mt-3 mb-2">{course.title}</h3>
-              <p className="text-gray-400 text-sm mb-4 line-clamp-2">{course.description}</p>
-              <div className="flex items-center justify-between">
-                <span className="text-purple-400 font-bold">₹{course.fee?.toLocaleString()}/mo</span>
-                <Link to="/auth" className="text-xs text-pink-400 flex items-center gap-1 hover:gap-2 transition-all">Enroll <FiArrowRight size={12} /></Link>
+              className="glass-card overflow-hidden hover:border-purple-500/40 transition-all group cursor-pointer flex flex-col">
+              <div className="h-44 w-full overflow-hidden relative">
+                <img 
+                  src={courseImages[course.danceStyle] || defaultCourseImg} 
+                  alt={course.title} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-350"
+                />
+                <div className="absolute top-3 right-3 text-xl bg-black/50 backdrop-blur-md w-9 h-9 rounded-full flex items-center justify-center border border-white/10">
+                  {courseIcons[course.danceStyle] || '🎵'}
+                </div>
+              </div>
+              <div className="p-5 flex-grow flex flex-col justify-between">
+                <div>
+                  <span className="text-xs px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20 capitalize">{course.level}</span>
+                  <h3 className="text-lg font-bold text-white mt-3 mb-2">{course.title}</h3>
+                  <p className="text-gray-400 text-sm mb-4 line-clamp-2">{course.description}</p>
+                </div>
+                <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/5">
+                  <span className="text-purple-400 font-bold">₹{course.fee?.toLocaleString()}/mo</span>
+                  <Link to="/auth" className="text-xs text-pink-400 flex items-center gap-1 hover:gap-2 transition-all">Enroll <FiArrowRight size={12} /></Link>
+                </div>
               </div>
             </motion.div>
           ))}

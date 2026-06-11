@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://your-backend-api-url.onrender.com/api/:path*"
+      "destination": "https://morden-fullstack-dance-school-management.onrender.com/api/:path*"
     },
     {
       "source": "/uploads/:path*",
-      "destination": "https://your-backend-api-url.onrender.com/uploads/:path*"
+      "destination": "https://morden-fullstack-dance-school-management.onrender.com/uploads/:path*"
     },
     {
       "source": "/:path*",

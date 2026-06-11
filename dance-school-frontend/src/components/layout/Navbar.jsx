@@ -50,16 +50,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          {user ? (
-            <Link
-              to={`/${user.role}`}
-              className="px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg shadow-purple-500/20 hover:from-purple-500 hover:to-pink-400 transition-all capitalize"
-            >
-              {user.role} Panel
-            </Link>
-          ) : (
-            <Link to="/auth" className="btn-primary text-sm">Login</Link>
-          )}
+          <Link to="/auth" className="btn-primary text-sm">Login</Link>
         </div>
 
         <button className="md:hidden text-gray-300" onClick={() => setOpen(!open)}>
@@ -76,13 +67,7 @@ const Navbar = () => {
             </NavLink>
           ))}
           <div className="flex gap-2 mt-2">
-            {user ? (
-              <Link to={`/${user.role}`} className="px-4 py-2.5 rounded-lg text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-500 text-white text-center flex-1 capitalize">
-                {user.role} Panel
-              </Link>
-            ) : (
-              <Link to="/auth" className="btn-primary text-sm text-center flex-1">Login</Link>
-            )}
+            <Link to="/auth" className="btn-primary text-sm text-center flex-1">Login</Link>
           </div>
 
         </div>
